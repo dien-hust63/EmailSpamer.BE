@@ -9,5 +9,6 @@ namespace WebBanHang.Common.Interfaces.DL
 {
     public interface IReceiverDL : IBaseDL<Receiver>
     {
+        public bool importReceiver(List<ReceiverEmail> listInsert);
     }
 }

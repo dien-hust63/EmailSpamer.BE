@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="CsvHelper" Version="30.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\PaymentGateway\PaymentGateway.csproj" />
     <ProjectReference Include="..\WebBanHang.Common\WebBanHang.Common.csproj" />
     <ProjectReference Include="..\WebBanHang.DL\WebBanHang.DL.csproj" />

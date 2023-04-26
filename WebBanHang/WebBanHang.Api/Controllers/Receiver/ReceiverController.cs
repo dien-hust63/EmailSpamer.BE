@@ -28,5 +28,21 @@ namespace WebBanHang.Api.Controllers
             _baseBL = baseBL;
             _receiverBL = receiverBL;
         }
+
+        [HttpPost("import")]
+        public ServiceResult importReceiver([FromForm] IFormFile file)
+        {
+            ServiceResult serviceResult = new ServiceResult();
+            try
+            {
+                serviceResult = _receiverBL.importReceiver(file);
+            }
+            catch (Exception ex)
+            {
+                serviceResult.setError(ex.Message);
+            }
+            return serviceResult;
+        }
+
     }
 }
