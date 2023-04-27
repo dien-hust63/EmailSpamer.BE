@@ -21,6 +21,8 @@ namespace WebBanHang.Common.Entities.Model
 
         public DateTime? enddate { get; set; }
 
+        public string subjectemail { get; set; }
+
         [AttributeCustomNotMap]
         public string startdatetext
         {
@@ -38,5 +40,20 @@ namespace WebBanHang.Common.Entities.Model
                 return enddate.Value.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
             }
         }
+
+        [AttributeCustomNotMap]
+        public int waitemail { get; set; }
+
+        [AttributeCustomNotMap]
+        public int sentemail { get; set; }
+
+        [AttributeCustomNotMap]
+        public int unsubcribe { get; set; }
+
+        [AttributeCustomNotMap]
+        public int total { get; set; }
+
+        [AttributeCustomNotMap]
+        public string filepath { get; set; }
     }
 }

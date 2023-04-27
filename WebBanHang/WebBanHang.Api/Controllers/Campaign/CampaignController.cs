@@ -54,5 +54,40 @@ namespace WebBanHang.Api.Controllers
             _campaignBL.Unsubcribe(id, cp);
             return base.Content("<div>We won't send this information for you again</div>", "text/html");
         }
+
+
+        [HttpPost("addNewCampaign")]
+        public ServiceResult addNewCampaign([FromForm]CampaignParam campaignParam)
+        {
+
+            ServiceResult serviceResult = new ServiceResult();
+            try
+            {
+                serviceResult = _campaignBL.addNewCampaign(campaignParam);
+                return serviceResult;
+            }
+            catch (Exception ex)
+            {
+                serviceResult.setError(ex.Message);
+            }
+            return serviceResult;
+        }
+
+        [HttpGet("detail/{id}")]
+        public ServiceResult getDetailCustom(int id)
+        {
+
+            ServiceResult serviceResult = new ServiceResult();
+            try
+            {
+                serviceResult = _campaignBL.getDetailCustom(id);
+                return serviceResult;
+            }
+            catch (Exception ex)
+            {
+                serviceResult.setError(ex.Message);
+            }
+            return serviceResult;
+        }
     }
 }

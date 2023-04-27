@@ -14,5 +14,9 @@ namespace WebBanHang.Common.Interfaces.BL
         public ServiceResult sendEmail(EmailCampaignParam emailParam);
 
         public void Unsubcribe(int id, int campaignID);
+
+        public ServiceResult addNewCampaign(CampaignParam param);
+
+        public ServiceResult getDetailCustom(int id);
     }
 }

@@ -51,11 +51,12 @@ namespace WebBanHang.BL.BL
             // get all sent email in campaign
             List<CampaignDetail> listCampaignDetail = _campaignDL.GetListCampaignDetail(emailParam.CampaignID);
 
-            List<int> listReceiverWaitID = listCampaignDetail.FindAll(x => x.statusid == (int)EmailCampaignStatus.Sent || x.statusid == (int)EmailCampaignStatus.Unsubcribe).Select(x => x.idreceiver).ToList();
+            List<int> listReceiverNotWait = listCampaignDetail.FindAll(x => x.statusid == (int)EmailCampaignStatus.Sent || x.statusid == (int)EmailCampaignStatus.Unsubcribe).Select(x => x.idreceiver).ToList();
 
-            List<Receiver> listReceiverWait = receiverList.FindAll(x => !listReceiverWaitID.Contains(x.idreceiver));
+            List<Receiver> listReceiverWait = receiverList.FindAll(x => !listReceiverNotWait.Contains(x.idreceiver));
 
-            string path = @"emailcontent\emailcontent.txt";
+            Campaign campaign = _campaignDL.GetEntityById(emailParam.CampaignID);
+            string path = campaign.filepath;
             string bodyEmail = File.ReadAllText(path);
             // send email and update status
             int countSender = senderList.Count;
@@ -70,7 +71,7 @@ namespace WebBanHang.BL.BL
                 int endReceiver = startReceiver +  MAX_EMAIL_BATCH <= countReceiver - 1 ? startReceiver + MAX_EMAIL_BATCH : countReceiver - 1;
                 for (int j = startReceiver; j <= endReceiver; j++)
                 {
-                    ServiceResult result = sendEmailCampaign(emailParam, senderList[i], listReceiverWait[j], bodyEmail);
+                    ServiceResult result = sendEmailCampaign(emailParam, senderList[i], listReceiverWait[j], bodyEmail, campaign.subjectemail);
 
                     if (result.Success)
                     {
@@ -100,12 +101,12 @@ namespace WebBanHang.BL.BL
             
         }
 
-        public ServiceResult sendEmailCampaign(EmailCampaignParam param, Sender sender, Receiver receiver, string bodyEmail)
+        public ServiceResult sendEmailCampaign(EmailCampaignParam param, Sender sender, Receiver receiver, string bodyEmail,string subjectemail)
         {
 
             MailRequest mailContent = new MailRequest();
             mailContent.ToEmail = receiver.email;
-            mailContent.Subject = "SoICT 2022: The 11th International Symposium on Information and Communication Technology";
+            mailContent.Subject = subjectemail;
             int fakeReceiverID = receiver.idreceiver + int.Parse(_configuration["FakeID"].ToString());
             int fakeCampaignID = param.CampaignID + int.Parse(_configuration["FakeID"].ToString());
             string linkUnsubcribe = string.Format(_configuration["UnsubcribeURL"].ToString(), fakeReceiverID, fakeCampaignID);
@@ -130,6 +131,59 @@ namespace WebBanHang.BL.BL
                 };
                 _campaignDL.unSubcribe(campaignDetail);
             }
+        }
+
+        /// <summary>
+        /// Thêm mới campaign
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="campaignID"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public ServiceResult addNewCampaign(CampaignParam param)
+        {
+            ServiceResult serviceResult = new ServiceResult();
+            if(param.file != null)
+            {
+                var fileextension = Path.GetExtension(param.file.FileName);
+                var filename = Guid.NewGuid().ToString() + fileextension;
+                string filepath = Path.Combine(Directory.GetCurrentDirectory(), "emailcontent", filename);
+                using (FileStream fs = System.IO.File.Create(filepath))
+                {
+                    param.file.CopyTo(fs);
+                }
+                serviceResult.Data = _campaignDL.addNewCampaign(param, filepath);
+            }
+            else
+            {
+                serviceResult.setError("Chưa truyền file nội dung email.");
+            }
+            
+           
+            return serviceResult;
+        }
+
+        /// <summary>
+        /// lấy chi tiết campaign
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ServiceResult getDetailCustom(int id)
+        {
+            ServiceResult serviceResult = new ServiceResult();
+            Campaign campaign = _campaignDL.GetEntityById(id);
+
+            List<Receiver> receiverList = _receiverDL.GetAllEntities().ToList();
+
+            // get all sent email in campaign
+            List<CampaignDetail> listCampaignDetail = _campaignDL.GetListCampaignDetail(id);
+            
+            campaign.sentemail = listCampaignDetail.Count(x => x.statusid == (int)EmailCampaignStatus.Sent);
+            campaign.unsubcribe = listCampaignDetail.Count(x => x.statusid == (int)EmailCampaignStatus.Unsubcribe);
+            campaign.waitemail = receiverList.Count - campaign.sentemail - campaign.unsubcribe;
+            campaign.total = receiverList.Count;
+            serviceResult.Data = campaign;
+            return serviceResult;
         }
     }
 }

@@ -21,6 +21,19 @@ namespace WebBanHang.DL.DL
         { 
         }
 
+        public bool addNewCampaign(CampaignParam param, string filepath)
+        {
+            string sql = "insert into campaign(campaigncode,campaignname,startdate,enddate,filepath,subjectemail) values (@CampaignCode, @CampaignName, @StartDate, @EndDate, @FilePath,@SubjectEmail)";
+            DynamicParameters dynamicParam = new DynamicParameters();
+            dynamicParam.Add("@CampaignCode", param.campaigncode);
+            dynamicParam.Add("@CampaignName", param.campaignname);
+            dynamicParam.Add("@StartDate", param.startdate);
+            dynamicParam.Add("@EndDate", param.enddate);
+            dynamicParam.Add("@SubjectEmail", param.subjectemail);
+            dynamicParam.Add("@FilePath", filepath);
+            return _dbHelper.Execute(sql, dynamicParam, commandType: CommandType.Text) > 0;
+        }
+
         public List<CampaignDetail> GetListCampaignDetail(int campaignID)
         {
             string sql = "select cd.* from campaigndetail cd where cd.idcampaign = @CampaignID";

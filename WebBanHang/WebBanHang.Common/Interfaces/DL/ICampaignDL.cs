@@ -20,5 +20,7 @@ namespace WebBanHang.Common.Interfaces.DL
         public bool insertCampaignDetail(CampaignDetail campaignDetail);
 
         public bool unSubcribe(CampaignDetail campaign);
+
+        public bool addNewCampaign(CampaignParam param, string filepath);
     }
 }
