@@ -165,7 +165,7 @@ namespace WebBanHang.DL.BaseDL
         /// </summary>
         /// <param name="param"></param>
         /// <returns></returns>
-        private string buildCommandTextPaging(BasePagingParam param)
+        public virtual string buildCommandTextPaging(BasePagingParam param)
         {
             string whereClause = BuildWhereFilter(param.ListFilter, param.FilterFormula);
             string orderByClause = BuildOrderByClause(param.ListOrderBy);

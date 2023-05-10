@@ -9,5 +9,7 @@ namespace WebBanHang.Common.Interfaces.DL
 {
     public interface ISenderDL : IBaseDL<Sender>
     {
+
+        public List<SenderDaily> getSenderToday();
     }
 }

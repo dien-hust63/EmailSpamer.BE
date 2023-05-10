@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using WebBanHang.Common.DBHelper;
@@ -17,6 +18,13 @@ namespace WebBanHang.DL.DL
     {
         public SenderDL(IConfiguration configuration, IDBHelper dbHelper) : base(configuration, dbHelper)
         { 
+        }
+
+        public List<SenderDaily> getSenderToday()
+        {
+            string storeName = "Proc_GetSenderToday";
+            DynamicParameters dynamicParam = new DynamicParameters();
+            return _dbHelper.Query<SenderDaily>(storeName, dynamicParam, commandType: CommandType.StoredProcedure);
         }
     }
 }

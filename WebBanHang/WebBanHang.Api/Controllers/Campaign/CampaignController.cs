@@ -3,20 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using WebBanHang.Common.Entities.Model;
 using WebBanHang.Common.Interfaces.Base;
 using WebBanHang.Common.Interfaces.BL;
-
-using Gather.ApplicationCore.Entities;
-using Gather.ApplicationCore.Entities.Param;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using WebBanHang.Common.Entities.Model;
-using WebBanHang.Common.Entities.Param;
-using WebBanHang.Common.Interfaces.Base;
-using WebBanHang.Common.Interfaces.BL;
 using WebBanHang.Common.Entities;
+using WebBanHang.Common.Constant;
 
 namespace WebBanHang.Api.Controllers
 {
@@ -57,7 +45,7 @@ namespace WebBanHang.Api.Controllers
 
 
         [HttpPost("addNewCampaign")]
-        public ServiceResult addNewCampaign([FromForm]CampaignParam campaignParam)
+        public ServiceResult addNewCampaign([FromForm] CampaignParam campaignParam)
         {
 
             ServiceResult serviceResult = new ServiceResult();
@@ -81,6 +69,40 @@ namespace WebBanHang.Api.Controllers
             try
             {
                 serviceResult = _campaignBL.getDetailCustom(id);
+                return serviceResult;
+            }
+            catch (Exception ex)
+            {
+                serviceResult.setError(ex.Message);
+            }
+            return serviceResult;
+        }
+
+        [HttpPost("updateEmailSetting")]
+        public ServiceResult updateEmailSetting(EmailSettingParam param)
+        {
+
+            ServiceResult serviceResult = new ServiceResult();
+            try
+            {
+                serviceResult.Data = _campaignBL.updateEmailSetting(param);
+                return serviceResult;
+            }
+            catch (Exception ex)
+            {
+                serviceResult.setError(ex.Message);
+            }
+            return serviceResult;
+        }
+
+        [HttpGet("getEmailSetting")]
+        public ServiceResult getEmailSetting()
+        {
+
+            ServiceResult serviceResult = new ServiceResult();
+            try
+            {
+                serviceResult.Data = _campaignBL.getEmailSetting();
                 return serviceResult;
             }
             catch (Exception ex)

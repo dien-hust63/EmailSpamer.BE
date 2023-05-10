@@ -28,5 +28,22 @@ namespace WebBanHang.Api.Controllers
             _baseBL = baseBL;
             _senderBL = senderBL;
         }
+
+        [HttpGet("getSenderToday")]
+        public ServiceResult getSenderToday()
+        {
+
+            ServiceResult serviceResult = new ServiceResult();
+            try
+            {
+                serviceResult.Data = _senderBL.getSenderToday();
+                return serviceResult;
+            }
+            catch (Exception ex)
+            {
+                serviceResult.setError(ex.Message);
+            }
+            return serviceResult;
+        }
     }
 }

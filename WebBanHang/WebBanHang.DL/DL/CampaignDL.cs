@@ -12,6 +12,7 @@ using WebBanHang.Common.Interfaces.DL;
 using WebBanHang.Common.ServiceCollection;
 using WebBanHang.DL.BaseDL;
 using static Gather.ApplicationCore.Constant.RoleProject;
+using static WebBanHang.Common.Enumeration.Enumeration;
 
 namespace WebBanHang.DL.DL
 {
@@ -34,6 +35,14 @@ namespace WebBanHang.DL.DL
             return _dbHelper.Execute(sql, dynamicParam, commandType: CommandType.Text) > 0;
         }
 
+        public CommonSetting getEmailSetting()
+        {
+            string sql = "select cd.* from commonsetting cd where cd.identify = @identify";
+            DynamicParameters dynamicParam = new DynamicParameters();
+            dynamicParam.Add("@identify", "SETTING1");
+            return _dbHelper.QueryFirstOrDefault<CommonSetting>(sql, dynamicParam, commandType: CommandType.Text);
+        }
+
         public List<CampaignDetail> GetListCampaignDetail(int campaignID)
         {
             string sql = "select cd.* from campaigndetail cd where cd.idcampaign = @CampaignID";
@@ -42,17 +51,20 @@ namespace WebBanHang.DL.DL
             return _dbHelper.Query<CampaignDetail>(sql, dynamicParam, commandType: CommandType.Text);
         }
 
-        public bool insertCampaignDetail(CampaignDetail campaignDetail)
+        public bool insertCampaignDetail(CampaignDetail campaignDetail, int senderID)
         {
-            string sql = "INSERT INTO campaigndetail(idcampaign,receiver,idreceiver,statusid,statusname,senddate) values (@CampaignID, @Receiver, @ReceiverID, @StatusID, @StatusName, @SendDate)";
+            string storeName = "Proc_UpdateAfterSendEmail";
             DynamicParameters dynamicParam = new DynamicParameters();
-            dynamicParam.Add("@CampaignID", campaignDetail.idcampaign);
-            dynamicParam.Add("@StatusID", campaignDetail.statusid);
-            dynamicParam.Add("@StatusName", campaignDetail.statusname);
-            dynamicParam.Add("@ReceiverID", campaignDetail.idreceiver);
-            dynamicParam.Add("@Receiver", campaignDetail.receiver);
-            dynamicParam.Add("@SendDate", DateTime.Now);
-            return _dbHelper.Execute(sql, dynamicParam, commandType: CommandType.Text) > 0;
+            dynamicParam.Add("v_CampaignDetailID", 0);
+            dynamicParam.Add("v_CampaignID", campaignDetail.idcampaign);
+            dynamicParam.Add("v_Receiver", campaignDetail.receiver);
+            dynamicParam.Add("v_ReceiverID", campaignDetail.idreceiver);
+            dynamicParam.Add("v_StatusID", campaignDetail.statusid);
+            dynamicParam.Add("v_StatusName", campaignDetail.statusname);
+            dynamicParam.Add("v_SendDate", DateTime.Now);
+            dynamicParam.Add("v_Mode",(int)EntityState.Add);
+            dynamicParam.Add("v_SenderID", senderID);
+            return _dbHelper.Execute(storeName, dynamicParam, commandType: CommandType.StoredProcedure) > 0;
         }
 
         public bool unSubcribe(CampaignDetail campaign)
@@ -73,14 +85,28 @@ namespace WebBanHang.DL.DL
         /// <param name="campaignDetail"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public bool updateCampaignDetail(CampaignDetail campaignDetail)
+        public bool updateCampaignDetail(CampaignDetail campaignDetail, int senderID)
         {
-            string sql = "update campaigndetail cd set cd.statusid = @StatusID, cd.statusname = @StatusName, cd.senddate = @SendDate where cd.idcampaigndetail = @CampaignDetailID";
+            string storeName = "Proc_UpdateAfterSendEmail";
             DynamicParameters dynamicParam = new DynamicParameters();
-            dynamicParam.Add("@CampaignDetailID", campaignDetail.idcampaigndetail);
-            dynamicParam.Add("@StatusID", campaignDetail.statusid);
-            dynamicParam.Add("@StatusName", campaignDetail.statusname);
-            dynamicParam.Add("@SendDate", DateTime.Now);
+            dynamicParam.Add("v_CampaignDetailID", campaignDetail.idcampaigndetail);
+            dynamicParam.Add("v_SendDate", DateTime.Now);
+            dynamicParam.Add("v_CampaignID", campaignDetail.idcampaign);
+            dynamicParam.Add("v_Receiver", campaignDetail.receiver);
+            dynamicParam.Add("v_ReceiverID", campaignDetail.idreceiver);
+            dynamicParam.Add("v_StatusID", campaignDetail.statusid);
+            dynamicParam.Add("v_StatusName", campaignDetail.statusname);
+            dynamicParam.Add("v_Mode", (int)EntityState.Edit);
+            dynamicParam.Add("v_SenderID", senderID);
+            return _dbHelper.Execute(storeName, dynamicParam, commandType: CommandType.StoredProcedure) > 0;
+        }
+
+        public bool updateEmailSetting(int maxemail)
+        {
+            string sql = "update commonsetting cd set cd.maxemail = @maxemail where cd.identify = @identify";
+            DynamicParameters dynamicParam = new DynamicParameters();
+            dynamicParam.Add("@identify", "SETTING1");
+            dynamicParam.Add("@maxemail", maxemail);
             return _dbHelper.Execute(sql, dynamicParam, commandType: CommandType.Text) > 0;
         }
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Gather.ApplicationCore.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,6 +18,13 @@ namespace WebBanHang.BL.BL
         public SenderBL(IBaseDL<Sender> baseDL, ISenderDL senderDL) : base(baseDL)
         {
             _senderDL = senderDL;
+        }
+
+        public ServiceResult getSenderToday()
+        {
+            ServiceResult   result = new ServiceResult();
+            result.Data = _senderDL.getSenderToday();
+            return result;
         }
     }
 }

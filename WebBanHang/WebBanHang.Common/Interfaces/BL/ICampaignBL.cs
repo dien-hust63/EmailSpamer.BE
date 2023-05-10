@@ -18,5 +18,9 @@ namespace WebBanHang.Common.Interfaces.BL
         public ServiceResult addNewCampaign(CampaignParam param);
 
         public ServiceResult getDetailCustom(int id);
+
+        public ServiceResult updateEmailSetting(EmailSettingParam param);
+
+        public ServiceResult getEmailSetting();
     }
 }

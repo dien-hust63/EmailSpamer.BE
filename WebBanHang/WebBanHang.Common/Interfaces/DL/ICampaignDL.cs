@@ -15,12 +15,16 @@ namespace WebBanHang.Common.Interfaces.DL
 
         public List<CampaignDetail> GetListCampaignDetail(int campaignID);
 
-        public bool updateCampaignDetail(CampaignDetail campaignDetail);
+        public bool updateCampaignDetail(CampaignDetail campaignDetail, int senderid);
 
-        public bool insertCampaignDetail(CampaignDetail campaignDetail);
+        public bool insertCampaignDetail(CampaignDetail campaignDetail, int senderid);
 
         public bool unSubcribe(CampaignDetail campaign);
 
         public bool addNewCampaign(CampaignParam param, string filepath);
+
+        public bool updateEmailSetting(int maxemail);
+
+        public CommonSetting getEmailSetting();
     }
 }

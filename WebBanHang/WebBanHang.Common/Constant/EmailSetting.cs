@@ -1,4 +1,5 @@
-﻿using Gather.ApplicationCore.Entities;
+using Gather.ApplicationCore.Entities;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,10 +7,10 @@ using System.Threading.Tasks;
 using WebBanHang.Common.Entities.Model;
 using WebBanHang.Common.Interfaces.Base;
 
-namespace WebBanHang.Common.Interfaces.BL
+namespace WebBanHang.Common.Constant
 {
-    public interface ISenderBL : IBaseBL<Sender>
+    public static class EmailSetting
     {
-        public ServiceResult getSenderToday();
+        public static int MAX_SEND_IN_DAY = 100;
     }
 }

@@ -38,7 +38,7 @@ namespace WebBanHang.BL.BL
                 List<Receiver> receivers = _receiverDL.GetAllEntities().ToList();
                 var fileextension = Path.GetExtension(file.FileName);
                 var filename = Guid.NewGuid().ToString() + fileextension;
-                var filepath = Path.Combine(Directory.GetCurrentDirectory(),"Files", filename);
+                var filepath = Path.Combine(Directory.GetCurrentDirectory(), "Temp", filename);
                 using (FileStream fs = System.IO.File.Create(filepath))
                 {
                     file.CopyTo(fs);
@@ -52,12 +52,12 @@ namespace WebBanHang.BL.BL
                         List<ReceiverEmail> listReceiver = new List<ReceiverEmail>();
                         foreach (var record in records)
                         {
-                            if(!receivers.Any(x => x.email == record.Email))
+                            if (!receivers.Any(x => x.email == record.Email))
                             {
                                 listReceiver.Add(record);
                             }
                         }
-                        if(listReceiver.Count > 0)
+                        if (listReceiver.Count > 0)
                         {
                             _receiverDL.importReceiver(listReceiver);
                         }
@@ -69,15 +69,16 @@ namespace WebBanHang.BL.BL
                     }
                 }
 
-                else {
+                else
+                {
                     serviceResult.setError("Không đúng định dạng file CSV.");
                 }
             }
             catch (Exception e)
             {
-               serviceResult.setError(e.ToString());
+                serviceResult.setError(e.ToString());
             }
             return serviceResult;
         }
-}
+    }
 }

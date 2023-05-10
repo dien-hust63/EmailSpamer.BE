@@ -17,5 +17,8 @@ namespace WebBanHang.Common.Entities.Model
         public string password { get; set; }
 
         public string displayname { get; set; } = "SoICT 2023";
+
+        [AttributeCustomNotMap]
+        public int sentemail { get; set; }
     }
 }
