@@ -131,7 +131,7 @@ namespace WebBanHang.BL.BL
             mailContent.Subject = subjectemail;
             int fakeReceiverID = receiver.idreceiver + int.Parse(_configuration["FakeID"].ToString());
             int fakeCampaignID = param.CampaignID + int.Parse(_configuration["FakeID"].ToString());
-            string linkUnsubcribe = string.Format(_configuration["UnsubcribeURL"].ToString(), fakeReceiverID, fakeCampaignID);
+            string linkUnsubcribe = string.Format(_configuration["UnsubcribeURL"].ToString(), fakeCampaignID, fakeReceiverID);
             mailContent.Body = String.Format(bodyEmail, linkUnsubcribe);
             mailContent.FromEmail = sender.email;
             mailContent.FromEmailPassWord = sender.password;
