@@ -185,6 +185,26 @@ namespace WebBanHang.BL.BL
             return serviceResult;
         }
 
+        public ServiceResult updateCampaign(CampaignUpdateParam param)
+        {
+            ServiceResult serviceResult = new ServiceResult();
+            string filepath = "";
+            if (param.file != null)
+            {
+                var fileextension = Path.GetExtension(param.file.FileName);
+                var filename = Guid.NewGuid().ToString() + fileextension;
+                filepath = Path.Combine(Directory.GetCurrentDirectory(), "emailcontent", filename);
+                using (FileStream fs = System.IO.File.Create(filepath))
+                {
+                    param.file.CopyTo(fs);
+                }
+                
+            }
+            serviceResult.Data = _campaignDL.updateCampaign(param, filepath);
+
+            return serviceResult;
+        }
+
         /// <summary>
         /// lấy chi tiết campaign
         /// </summary>

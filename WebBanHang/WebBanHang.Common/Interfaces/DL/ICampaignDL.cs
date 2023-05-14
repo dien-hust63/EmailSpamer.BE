@@ -26,5 +26,7 @@ namespace WebBanHang.Common.Interfaces.DL
         public bool updateEmailSetting(int maxemail);
 
         public CommonSetting getEmailSetting();
+
+        public bool updateCampaign(CampaignUpdateParam campaignDetail, string filepath);
     }
 }

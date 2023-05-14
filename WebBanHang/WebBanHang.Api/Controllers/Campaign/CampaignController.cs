@@ -61,6 +61,23 @@ namespace WebBanHang.Api.Controllers
             return serviceResult;
         }
 
+        [HttpPost("updateCampaign")]
+        public ServiceResult updateCampaign([FromForm] CampaignUpdateParam campaignParam)
+        {
+
+            ServiceResult serviceResult = new ServiceResult();
+            try
+            {
+                serviceResult = _campaignBL.updateCampaign(campaignParam);
+                return serviceResult;
+            }
+            catch (Exception ex)
+            {
+                serviceResult.setError(ex.Message);
+            }
+            return serviceResult;
+        }
+
         [HttpGet("detail/{id}")]
         public ServiceResult getDetailCustom(int id)
         {

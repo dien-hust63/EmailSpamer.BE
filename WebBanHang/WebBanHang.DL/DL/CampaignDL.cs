@@ -79,6 +79,27 @@ namespace WebBanHang.DL.DL
             return _dbHelper.Execute(sql, dynamicParam, commandType: CommandType.Text) > 0;
         }
 
+        public bool updateCampaign(CampaignUpdateParam campaignDetail, string filepath)
+        {
+            DynamicParameters dynamicParam = new DynamicParameters();
+            string sqlUpdate = "update campaign c set c.campaigncode = @CampaignCode, c.campaignname = @CampaignName, c.startdate = @StartDate, c.enddate = @EndDate, c.subjectemail = @SubjectEmail where c.idcampaign = @Idcampaign ";
+            if (filepath.Length > 0)
+            {
+                sqlUpdate = "update campaign c set c.campaigncode = @CampaignCode, c.campaignname = @CampaignName, c.startdate = @StartDate, c.enddate = @EndDate,c.filepath = @FilePath, c.subjectemail = @SubjectEmail where c.idcampaign = @Idcampaign ";
+                dynamicParam.Add("@FilePath", filepath);
+            }
+
+            
+            dynamicParam.Add("@CampaignCode", campaignDetail.campaigncode);
+            dynamicParam.Add("@CampaignName", campaignDetail.campaignname);
+            dynamicParam.Add("@StartDate", campaignDetail.startdate);
+            dynamicParam.Add("@EndDate", campaignDetail.enddate);
+            dynamicParam.Add("@SubjectEmail", campaignDetail.subjectemail);
+            dynamicParam.Add("@Idcampaign", campaignDetail.idcampaign);
+
+            return _dbHelper.Execute(sqlUpdate, dynamicParam, commandType: CommandType.Text) > 0;
+        }
+
         /// <summary>
         /// update campaign detail
         /// </summary>

@@ -22,5 +22,7 @@ namespace WebBanHang.Common.Interfaces.BL
         public ServiceResult updateEmailSetting(EmailSettingParam param);
 
         public ServiceResult getEmailSetting();
+
+        public ServiceResult updateCampaign(CampaignUpdateParam campaignParam);
     }
 }
