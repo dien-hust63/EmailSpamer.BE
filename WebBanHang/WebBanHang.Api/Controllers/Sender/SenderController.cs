@@ -16,6 +16,7 @@ using WebBanHang.Common.Entities.Model;
 using WebBanHang.Common.Entities.Param;
 using WebBanHang.Common.Interfaces.Base;
 using WebBanHang.Common.Interfaces.BL;
+using WebBanHang.Common.Entities;
 
 namespace WebBanHang.Api.Controllers
 {
@@ -44,6 +45,39 @@ namespace WebBanHang.Api.Controllers
                 serviceResult.setError(ex.Message);
             }
             return serviceResult;
+        }
+
+        [HttpPost("paging")]
+        public override IActionResult GetEntityPaging(BasePagingParam param)
+        {
+            try
+            {
+                var serviceResult = _senderBL.GetEntityPaging(param);
+                //4.Trả về kết quả cho client
+                if (serviceResult.Data != null)
+                {
+                    return StatusCode(200, serviceResult.Data);
+                }
+                else
+                {
+                    return StatusCode(204);
+                }
+            }
+            catch (Exception ex)
+            {
+                var errorObj = new
+                {
+                    devMsg = ex.Message,
+                    userMsg = Common.Resources.ResourceVN.Exception_ErrorMsg,
+                    errorCode = "Gather-001",
+                    moreInfo = "https://openapi.Gather.com.vn/errorcode/Gather-001",
+                    traceId = "ba9587fd-1a79-4ac5-a0ca-2c9f74dfd3fb"
+                };
+
+                return StatusCode(500, errorObj);
+            }
+
+
         }
     }
 }

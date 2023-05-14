@@ -1,7 +1,8 @@
 ﻿dotnet restore
 dotnet publish -c Release
 
-del /S bin\Release\net6.0\publish\*.pdb
+cd bin\Release\net6.0\publish\
+del /S *.pdb
 
 docker build -t dien2khust/emailspamer:0.0.0.1 .
 

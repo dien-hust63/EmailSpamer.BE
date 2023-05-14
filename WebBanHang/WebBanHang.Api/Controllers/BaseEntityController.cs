@@ -50,7 +50,7 @@ namespace WebBanHang.Api.Controllers
         }
 
         [HttpPost("paging")]
-        public IActionResult GetEntityPaging(BasePagingParam param)
+        public virtual IActionResult GetEntityPaging(BasePagingParam param)
         {
             try
             {

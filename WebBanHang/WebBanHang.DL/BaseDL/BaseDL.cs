@@ -165,7 +165,7 @@ namespace WebBanHang.DL.BaseDL
         /// </summary>
         /// <param name="param"></param>
         /// <returns></returns>
-        public virtual string buildCommandTextPaging(BasePagingParam param)
+        public string buildCommandTextPaging(BasePagingParam param)
         {
             string whereClause = BuildWhereFilter(param.ListFilter, param.FilterFormula);
             string orderByClause = BuildOrderByClause(param.ListOrderBy);
@@ -181,7 +181,7 @@ namespace WebBanHang.DL.BaseDL
         /// </summary>
         /// <param name="listOderBy"></param>
         /// <returns></returns>
-        private string BuildOrderByClause(List<OrderBy> listOderBy)
+        public string BuildOrderByClause(List<OrderBy> listOderBy)
         {
             return "";
         }
@@ -191,7 +191,7 @@ namespace WebBanHang.DL.BaseDL
         /// </summary>
         /// <param name="listFilter"></param>
         /// <returns></returns>
-        private string BuildWhereFilter(List<FilterObject> listFilter, string formula)
+        public string BuildWhereFilter(List<FilterObject> listFilter, string formula)
         {
             string baseWhere = "WHERE 1 = 1 ";
             if(listFilter.Count == 0 || formula.Length == 0)
