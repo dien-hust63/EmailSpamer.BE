@@ -59,7 +59,7 @@ namespace WebBanHang.DL.DL
             {
                 query.Append("(");
                 var paramName = $"@p_{rowCount}";
-                parameters.Add(paramName, receiver.Email);
+                parameters.Add(paramName, receiver.Email.Trim());
                 query.Append(paramName);
                 query.Append(",");
                 if (query[query.Length - 1].ToString().Equals(","))

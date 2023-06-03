@@ -52,7 +52,7 @@ namespace WebBanHang.BL.BL
                         List<ReceiverEmail> listReceiver = new List<ReceiverEmail>();
                         foreach (var record in records)
                         {
-                            if (!receivers.Any(x => x.email == record.Email))
+                            if (!receivers.Any(x => x.email == record.Email) && !listReceiver.Any(x => x.Email == record.Email))
                             {
                                 listReceiver.Add(record);
                             }
