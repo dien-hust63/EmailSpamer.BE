@@ -1,9 +1,11 @@
 ﻿using Gather.ApplicationCore.Constant;
 using Gather.ApplicationCore.Entities;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using WebBanHang.Common.Constant;
 using WebBanHang.Common.Entities;
@@ -121,6 +123,34 @@ namespace WebBanHang.BL.BL
             }
             return serviceResult;
 
+        }
+
+        public ServiceResult testSendEmail(TestSendEmailParam emailParam)
+        {
+            ServiceResult serviceResult = new ServiceResult();
+            List<Sender> senderList = _senderDL.GetAllEntities().ToList();
+            if (senderList.Count <= 0)
+            {
+                serviceResult.setError("Chưa thiết lập mail gửi");
+            }
+            MailRequest mailContent = new MailRequest();
+            Campaign campaign = _campaignDL.GetEntityById(emailParam.CampaignID);
+            if(campaign == null)
+            {
+                serviceResult.setError("Sự kiện không hợp lệ");
+            }
+            mailContent.ToEmail = emailParam.Email;
+            mailContent.Subject = campaign.subjectemail;
+            int fakeReceiverID = 999999999 + int.Parse(_configuration["FakeID"].ToString());
+            int fakeCampaignID = emailParam.CampaignID + int.Parse(_configuration["FakeID"].ToString());
+            string linkUnsubcribe = string.Format(_configuration["UnsubcribeURL"].ToString(), fakeCampaignID, fakeReceiverID);
+            string path = campaign.filepath;
+            string bodyEmail = File.ReadAllText(path);
+            mailContent.Body = String.Format(bodyEmail, linkUnsubcribe);
+            mailContent.FromEmail = senderList[0].email;
+            mailContent.FromEmailPassWord = senderList[0].password;
+            mailContent.FromDisplayName = senderList[0].displayname;
+            return _mailBL.sendEmail(mailContent);
         }
 
         public ServiceResult sendEmailCampaign(EmailCampaignParam param, Sender sender, Receiver receiver, string bodyEmail, string subjectemail)
@@ -249,5 +279,7 @@ namespace WebBanHang.BL.BL
             serviceResult.setError("Chưa thiết lập mặc định");
             return serviceResult;
         }
+
+        
     }
 }

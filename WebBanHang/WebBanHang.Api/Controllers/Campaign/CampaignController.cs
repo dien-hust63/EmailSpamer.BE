@@ -36,6 +36,23 @@ namespace WebBanHang.Api.Controllers
             return serviceResult;
         }
 
+        [HttpPost("testSendEmail")]
+        public ServiceResult testSendEmail(TestSendEmailParam emailParam)
+        {
+
+            ServiceResult serviceResult = new ServiceResult();
+            try
+            {
+                serviceResult = _campaignBL.testSendEmail(emailParam);
+                return serviceResult;
+            }
+            catch (Exception ex)
+            {
+                serviceResult.setError(ex.Message);
+            }
+            return serviceResult;
+        }
+
         [HttpGet("unsubcribe")]
         public ContentResult Unsubcribe(int id, int cp)
         {

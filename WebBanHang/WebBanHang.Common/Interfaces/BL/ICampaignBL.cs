@@ -13,6 +13,8 @@ namespace WebBanHang.Common.Interfaces.BL
     {
         public ServiceResult sendEmail(EmailCampaignParam emailParam);
 
+        public ServiceResult testSendEmail(TestSendEmailParam emailParam);
+
         public void Unsubcribe(int id, int campaignID);
 
         public ServiceResult addNewCampaign(CampaignParam param);

@@ -1,0 +1,45 @@
+<pre>
+SoICT 2023: The 12th International Symposium on Information and Communication Technology
+
+Hochiminh city, Vietnam 
+7-8, December 2023.
+http://soict.org/ 
+https://www.facebook.com/SOICT/
+
+SoICT 2023 is an international symposium covering significant research areas that include AI Foundations and Big Data, Network Communication and Security, Image and Natural Language Processing, Software Engineering and Digital Technology, Blockchain, and Operations Research trends. Following the past successful symposium SoICT 2022, which received submissions from 14 countries, the 12th International Symposium on Information and Communication Technology (SoICT 2023) will be held in Ho Chi Minh City, Vietnam on 7-8 December 2023. The symposium aims to provide an academic forum for researchers and graduate students to share their latest research findings and identify future computer science challenges. The symposium will include tutorials and keynotes given by world-class speakers.
+
+Important Dates
+===============
+
+- SUBMISSION DEADLINE: 05 September 2023 
+- AUTHOR NOTIFICATION: 5 October 2023
+- CAMERA-READY SUBMISSION: 23 October 2023
+- CONFERENCE DATES: 7, 8 December 2023
+ 
+
+General Chairs
+=============== 
+Cathal Gurrin, Dublin City University, Ireland
+Ho Tu Bao, Vietnam Institute for Advanced Study in Mathematics, Vietnam
+Ta Hai Tung, Hanoi University of Science and Technology, Vietnam
+
+
+Program Chairs 
+===============
+Ichiro IDE, Nagoya, Japan
+Wray Buntine, VinUniversity, Vietnam
+Tran Minh Triet, University of Science, Viet Nam National University Ho Chi Minh City, Vietnam
+Huynh Thi Thanh Binh, Hanoi University of Science and Technology, Vietnam
+
+Contact Us 
+==========
+If you have any further questions on SoICT 2022, please feel free to contact us.
+E-mail: contact@soict.hust.edu.vn 
+
+If you find this email bothersome and no longer wish to receive it, please click on the "Unsubscribe" button.
+</pre>
+<a href='{0}'>
+    <button class="GFG">
+        Unsubscribe
+    </button>
+</a>
