@@ -26,5 +26,6 @@ namespace WebBanHang.Common.Interfaces.BL
         public ServiceResult getEmailSetting();
 
         public ServiceResult updateCampaign(CampaignUpdateParam campaignParam);
+        public ServiceResult resetCampaign(int campaignID);
     }
 }

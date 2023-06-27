@@ -67,6 +67,17 @@ namespace WebBanHang.DL.DL
             return _dbHelper.Execute(storeName, dynamicParam, commandType: CommandType.StoredProcedure) > 0;
         }
 
+        public bool resetCampaign(int campaignID)
+        {
+            string sql = "update campaigndetail cd set cd.statusid = @StatusID, cd.statusname = @StatusName where statusid = @StatusSend and idcampaign = @CampaignID";
+            DynamicParameters dynamicParam = new DynamicParameters();
+            dynamicParam.Add("@StatusID", (int)EmailCampaignStatus.Wait);
+            dynamicParam.Add("@StatusName", EmailCampaignStatus.Wait.GetDisplayName());
+            dynamicParam.Add("@StatusSend", (int)EmailCampaignStatus.Sent);
+            dynamicParam.Add("@CampaignID", campaignID);
+            return _dbHelper.Execute(sql, dynamicParam, commandType: CommandType.Text) > 0;
+        }
+
         public bool unSubcribe(CampaignDetail campaign)
         {
             string sql = "update campaigndetail cd set cd.statusid = @StatusID, cd.statusname = @StatusName, cd.unsubdate = @UnSubcribeDate where cd.idcampaign = @CampaignID and cd.idreceiver = @ReceiverID";

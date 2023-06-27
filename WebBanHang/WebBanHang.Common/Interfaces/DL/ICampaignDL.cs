@@ -28,5 +28,6 @@ namespace WebBanHang.Common.Interfaces.DL
         public CommonSetting getEmailSetting();
 
         public bool updateCampaign(CampaignUpdateParam campaignDetail, string filepath);
+        public bool resetCampaign(int resetCampaign);
     }
 }

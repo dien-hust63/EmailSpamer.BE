@@ -53,6 +53,25 @@ namespace WebBanHang.Api.Controllers
             return serviceResult;
         }
 
+
+
+        [HttpPost("resetCampaign")]
+        public ServiceResult resetCampaign(CampaignIDParam param)
+        {
+
+            ServiceResult serviceResult = new ServiceResult();
+            try
+            {
+                serviceResult = _campaignBL.resetCampaign(param.idcampaign);
+                return serviceResult;
+            }
+            catch (Exception ex)
+            {
+                serviceResult.setError(ex.Message);
+            }
+            return serviceResult;
+        }
+
         [HttpGet("unsubcribe")]
         public ContentResult Unsubcribe(int id, int cp)
         {

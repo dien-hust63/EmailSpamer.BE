@@ -280,6 +280,11 @@ namespace WebBanHang.BL.BL
             return serviceResult;
         }
 
-        
+        public ServiceResult resetCampaign(int campaignID)
+        {
+            ServiceResult serviceResult = new ServiceResult();
+            serviceResult.Data = _campaignDL.resetCampaign(campaignID);
+            return serviceResult;
+        }
     }
 }
