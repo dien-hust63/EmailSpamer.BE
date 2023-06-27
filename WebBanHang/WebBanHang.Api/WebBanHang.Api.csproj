@@ -27,9 +27,6 @@
     <None Update="Dockerfile">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="emailcontent\0d86950f-0d45-41f0-a163-27e18ac25332.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="emailcontent\emailcontent.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
