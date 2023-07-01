@@ -11,7 +11,7 @@ namespace WebBanHang.Common.Entities.Model
 {
     public class CampaignIDParam
     {
-        public int idcampaign{ get; set; }
+        public int CampaignID { get; set; }
 
     }
 }

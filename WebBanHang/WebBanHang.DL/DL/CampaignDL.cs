@@ -24,13 +24,14 @@ namespace WebBanHang.DL.DL
 
         public bool addNewCampaign(CampaignParam param, string filepath)
         {
-            string sql = "insert into campaign(campaigncode,campaignname,startdate,enddate,filepath,subjectemail) values (@CampaignCode, @CampaignName, @StartDate, @EndDate, @FilePath,@SubjectEmail)";
+            string sql = "insert into campaign(campaigncode,campaignname,startdate,enddate,filepath,subjectemail,senderdisplay) values (@CampaignCode, @CampaignName, @StartDate, @EndDate, @FilePath,@SubjectEmail,@SenderDisplay)";
             DynamicParameters dynamicParam = new DynamicParameters();
             dynamicParam.Add("@CampaignCode", param.campaigncode);
             dynamicParam.Add("@CampaignName", param.campaignname);
             dynamicParam.Add("@StartDate", param.startdate);
             dynamicParam.Add("@EndDate", param.enddate);
             dynamicParam.Add("@SubjectEmail", param.subjectemail);
+            dynamicParam.Add("@SenderDisplay", param.senderdisplay);
             dynamicParam.Add("@FilePath", filepath);
             return _dbHelper.Execute(sql, dynamicParam, commandType: CommandType.Text) > 0;
         }
@@ -93,10 +94,10 @@ namespace WebBanHang.DL.DL
         public bool updateCampaign(CampaignUpdateParam campaignDetail, string filepath)
         {
             DynamicParameters dynamicParam = new DynamicParameters();
-            string sqlUpdate = "update campaign c set c.campaigncode = @CampaignCode, c.campaignname = @CampaignName, c.startdate = @StartDate, c.enddate = @EndDate, c.subjectemail = @SubjectEmail where c.idcampaign = @Idcampaign ";
+            string sqlUpdate = "update campaign c set c.campaigncode = @CampaignCode, c.campaignname = @CampaignName, c.startdate = @StartDate, c.enddate = @EndDate, c.subjectemail = @SubjectEmail,c.senderdisplay = @senderdisplay where c.idcampaign = @Idcampaign ";
             if (filepath.Length > 0)
             {
-                sqlUpdate = "update campaign c set c.campaigncode = @CampaignCode, c.campaignname = @CampaignName, c.startdate = @StartDate, c.enddate = @EndDate,c.filepath = @FilePath, c.subjectemail = @SubjectEmail where c.idcampaign = @Idcampaign ";
+                sqlUpdate = "update campaign c set c.campaigncode = @CampaignCode, c.campaignname = @CampaignName, c.startdate = @StartDate, c.enddate = @EndDate,c.filepath = @FilePath, c.subjectemail = @SubjectEmail,c.senderdisplay = @senderdisplay where c.idcampaign = @Idcampaign ";
                 dynamicParam.Add("@FilePath", filepath);
             }
 
@@ -107,6 +108,7 @@ namespace WebBanHang.DL.DL
             dynamicParam.Add("@EndDate", campaignDetail.enddate);
             dynamicParam.Add("@SubjectEmail", campaignDetail.subjectemail);
             dynamicParam.Add("@Idcampaign", campaignDetail.idcampaign);
+            dynamicParam.Add("@senderdisplay", campaignDetail.senderdisplay);
 
             return _dbHelper.Execute(sqlUpdate, dynamicParam, commandType: CommandType.Text) > 0;
         }

@@ -23,6 +23,8 @@ namespace WebBanHang.Common.Entities.Model
 
         public string subjectemail { get; set; }
 
+        public string senderdisplay { get; set; }
+
         [AttributeCustomNotMap]
         public string startdatetext
         {

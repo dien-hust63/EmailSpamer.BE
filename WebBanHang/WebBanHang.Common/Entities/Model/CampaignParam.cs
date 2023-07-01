@@ -21,6 +21,8 @@ namespace WebBanHang.Common.Entities.Model
 
         public string subjectemail { get; set; }
 
+        public string senderdisplay { get; set; }
+
         public IFormFile file { get; set; }
 
     }

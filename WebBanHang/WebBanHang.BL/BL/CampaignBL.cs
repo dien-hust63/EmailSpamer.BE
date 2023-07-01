@@ -95,7 +95,7 @@ namespace WebBanHang.BL.BL
                 for (int j = startReceiver; j <= endReceiver; j++)
                 {
                     ServiceResult result = new ServiceResult();
-                    result = sendEmailCampaign(emailParam, senderList[i], listReceiverWait[j], bodyEmail, campaign.subjectemail);
+                    result = sendEmailCampaign(emailParam, senderList[i], listReceiverWait[j], bodyEmail, campaign);
 
                     if (result.Success)
                     {
@@ -149,23 +149,23 @@ namespace WebBanHang.BL.BL
             mailContent.Body = String.Format(bodyEmail, linkUnsubcribe);
             mailContent.FromEmail = senderList[0].email;
             mailContent.FromEmailPassWord = senderList[0].password;
-            mailContent.FromDisplayName = senderList[0].displayname;
+            mailContent.FromDisplayName = campaign.senderdisplay;
             return _mailBL.sendEmail(mailContent);
         }
 
-        public ServiceResult sendEmailCampaign(EmailCampaignParam param, Sender sender, Receiver receiver, string bodyEmail, string subjectemail)
+        public ServiceResult sendEmailCampaign(EmailCampaignParam param, Sender sender, Receiver receiver, string bodyEmail, Campaign campaign)
         {
 
             MailRequest mailContent = new MailRequest();
             mailContent.ToEmail = receiver.email;
-            mailContent.Subject = subjectemail;
+            mailContent.Subject = campaign.subjectemail;
             int fakeReceiverID = receiver.idreceiver + int.Parse(_configuration["FakeID"].ToString());
             int fakeCampaignID = param.CampaignID + int.Parse(_configuration["FakeID"].ToString());
             string linkUnsubcribe = string.Format(_configuration["UnsubcribeURL"].ToString(), fakeCampaignID, fakeReceiverID);
             mailContent.Body = String.Format(bodyEmail, linkUnsubcribe);
             mailContent.FromEmail = sender.email;
             mailContent.FromEmailPassWord = sender.password;
-            mailContent.FromDisplayName = sender.displayname;
+            mailContent.FromDisplayName = campaign.senderdisplay;
             return _mailBL.sendEmail(mailContent);
         }
 

@@ -62,7 +62,7 @@ namespace WebBanHang.Api.Controllers
             ServiceResult serviceResult = new ServiceResult();
             try
             {
-                serviceResult = _campaignBL.resetCampaign(param.idcampaign);
+                serviceResult = _campaignBL.resetCampaign(param.CampaignID);
                 return serviceResult;
             }
             catch (Exception ex)
